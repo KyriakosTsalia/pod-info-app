@@ -5,5 +5,5 @@ build binary:
   stage: build
   image: golang:1.19-alpine3.17
   script:
-    - apk add --no-cache make git
+    - apk add --no-cache make git build-base
     - make
