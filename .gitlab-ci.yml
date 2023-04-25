@@ -10,4 +10,3 @@ build binary:
   artifacts:
     paths:
       - pod-info
-      - main.html
