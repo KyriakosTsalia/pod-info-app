@@ -2,11 +2,12 @@ stages:
   - build
   - package
   - test
+  - deploy
 
 variables:
   APP_VERSION: $CI_PIPELINE_IID-$CI_COMMIT_SHORT_SHA
 
-build binary:
+.build binary:
   stage: build
   image: golang:1.19-alpine3.17
   script:
@@ -18,7 +19,7 @@ build binary:
     paths:
       - build
 
-docker build:
+.docker build:
   stage: package
   services:
     - docker:23.0.4-dind
@@ -30,7 +31,7 @@ docker build:
     - docker image ls
     - docker push --all-tags $CI_REGISTRY_IMAGE
 
-integration tests:
+.integration tests:
   stage: test
   services:
     - name: $CI_REGISTRY_IMAGE:$APP_VERSION
@@ -38,3 +39,13 @@ integration tests:
   image: curlimages/curl
   script:
     - curl http://app:8080 | grep $APP_VERSION
+
+create merge request:
+  stage: deploy
+  image: 
+    name: gitlab/glab:v1.28.1
+    entrypoint: [""]
+  script:
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/kyriakos_tsalia/pure-gitops
+    - ls pure-gitops
+
