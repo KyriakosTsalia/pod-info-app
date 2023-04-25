@@ -1,3 +1,9 @@
-test job:
-  image: alpine
-  script: echo "Hello World"
+stages:
+  - build
+
+build binary:
+  stage: build
+  image: golang:1.19-alpine3.17
+  script:
+    - apk add --no-cache make git
+    - make
