@@ -7,3 +7,7 @@ build binary:
   script:
     - apk add --no-cache make git build-base
     - make
+  artifacts:
+    paths:
+      - pod-info
+      - main.html
