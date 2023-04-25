@@ -46,6 +46,13 @@ create merge request:
     name: gitlab/glab:v1.28.1
     entrypoint: [""]
   script:
+    # to be able to use the CI_JOB_TOKEN the pure-gitops project must add the pod-info-app project to its allowlist -
+    # that is not needed for public or internal projects
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/kyriakos_tsalia/pure-gitops
-    - ls pure-gitops
+    - cd pure-gitops
+    - git checkout -b feature/app-version_$APP_VERSION
+    - git branch
+    # - sed -i "s#registry.gitlab.com.*#$CI_REGISTRY_IMAGE:${APP_VERSION}#g" manifests/deployment.yaml
+    - sed -i "s#registry.gitlab.com.*#registry.gitlab.com/image-name:app-version#g" manifests/deployment.yaml
+    - cat manifests/deployment.yaml
 
