@@ -37,4 +37,4 @@ integration tests:
       alias: app
   image: curlimages/curl
   script:
-    - curl http://app:8080
+    - curl http://app:8080 | grep $APP_VERSION
