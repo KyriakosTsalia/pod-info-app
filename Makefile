@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := build
+
 fmt:
 	go fmt ./...
 .PHONY:fmt
