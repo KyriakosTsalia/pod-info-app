@@ -54,6 +54,8 @@ create merge request:
     - sed -i "s#registry.gitlab.com.*#$CI_REGISTRY_IMAGE:${APP_VERSION}#g" manifests/deployment.yaml
     - grep image manifests/deployment.yaml
     - git add .
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
     - git push origin feature/app-version_$APP_VERSION
 
