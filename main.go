@@ -33,7 +33,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		tableStyle = ""
 	}
 
-	data_struct := struct {
+	dataStruct := struct {
 		NodeName     string
 		PodName      string
 		PodNamespace string
@@ -58,7 +58,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	t.Execute(w, data_struct)
+	t.Execute(w, dataStruct)
 }
 
 func main() {
