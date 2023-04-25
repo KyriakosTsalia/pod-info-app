@@ -52,5 +52,5 @@ create merge request:
     - cd pure-gitops
     - git checkout -b feature/app-version_$APP_VERSION
     - sed -i "s#registry.gitlab.com.*#$CI_REGISTRY_IMAGE:${APP_VERSION}#g" manifests/deployment.yaml
-    - cat manifests/deployment.yaml
+    - grep image manifests/deployment.yaml
 
