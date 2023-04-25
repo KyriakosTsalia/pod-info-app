@@ -3,7 +3,7 @@ stages:
   - package
 
 variables:
-  APP_VERSION: $CI_PIPEPINE_IID-$CI_COMMIT_SHORT_SHA
+  APP_VERSION: $CI_PIPELINE_IID-$CI_COMMIT_SHORT_SHA
 
 build binary:
   stage: build
