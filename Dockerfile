@@ -29,8 +29,8 @@ FROM alpine:3.17
 
 RUN apk add ca-certificates
 
-COPY pod-info /app/pod-info
-COPY main.html /app/main.html
+COPY build/pod-info /app/pod-info
+COPY build/main.html /app/main.html
 
 EXPOSE 8080
 

@@ -1,12 +1,29 @@
 stages:
   - build
+  - package
+
+variables:
+  APP_VERSION: $CI_PIPEPINE_IID-$CI_COMMIT_SHORT_SHA
 
 build binary:
   stage: build
   image: golang:1.19-alpine3.17
   script:
-    - apk add --no-cache make git build-base
+    - apk add --no-cache make git build-base gettext
+    - mkdir build
+    - envsubst < /tmp/main.html > build/main.html
     - make
   artifacts:
     paths:
-      - pod-info
+      - build
+
+docker build:
+  stage: package
+  services:
+    - docker:23.0.4-dind
+  image: docker:23.0.4
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE:$APP_VERSION .
+    - docker image ls
+

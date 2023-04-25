@@ -9,5 +9,5 @@ vet: fmt
 .PHONY:vet
 
 build: vet
-	go build -o pod-info main.go
+	go build -o build/pod-info main.go
 .PHONY:build
