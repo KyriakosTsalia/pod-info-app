@@ -48,7 +48,9 @@ create merge request:
   script:
     # to be able to use the CI_JOB_TOKEN the pure-gitops project must add the pod-info-app project to its allowlist -
     # that is not needed for public or internal projects
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/kyriakos_tsalia/pure-gitops
+    # the CI_JOB_TOKEN has only read access to the repository
+    # a personal access token needs to be created and a PERSONAL_ACCESS_TOKEN CI/CD variable
+    - git clone http://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/kyriakos_tsalia/pure-gitops
     - cd pure-gitops
     - git checkout -b feature/app-version_$APP_VERSION
     - sed -i "s#registry.gitlab.com.*#$CI_REGISTRY_IMAGE:${APP_VERSION}#g" manifests/deployment.yaml
@@ -57,5 +59,5 @@ create merge request:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
-    - git push origin feature/app-version_$APP_VERSION
+    - git push http://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
 
