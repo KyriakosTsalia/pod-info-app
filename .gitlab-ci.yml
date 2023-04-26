@@ -43,7 +43,7 @@ variables:
 create merge request:
   stage: deploy
   image: 
-    name: gitlab/glab:v1.28.1
+    name: alpine/git:2.36.3
     entrypoint: [""]
   script:
     # to be able to use the CI_JOB_TOKEN the pure-gitops project must add the pod-info-app project to its allowlist -
@@ -60,7 +60,3 @@ create merge request:
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
     - git push https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
-    - glab config --token=$PERSONAL_ACCESS_TOKEN --url=https://gitlab.com
-    - glab config set remote_alias origin
-    - glab mr create --fill -t "Update application image version to ${APP_VERSION}"
-
