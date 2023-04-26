@@ -7,7 +7,7 @@ stages:
 variables:
   APP_VERSION: $CI_PIPELINE_IID-$CI_COMMIT_SHORT_SHA
 
-.build binary:
+build binary:
   stage: build
   image: golang:1.19-alpine3.17
   script:
@@ -19,7 +19,7 @@ variables:
     paths:
       - build
 
-.docker build:
+docker build:
   stage: package
   services:
     - docker:23.0.4-dind
@@ -31,7 +31,7 @@ variables:
     - docker image ls
     - docker push --all-tags $CI_REGISTRY_IMAGE
 
-.integration tests:
+integration tests:
   stage: test
   services:
     - name: $CI_REGISTRY_IMAGE:$APP_VERSION
