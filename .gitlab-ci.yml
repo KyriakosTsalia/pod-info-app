@@ -62,5 +62,4 @@ create merge request:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
-    - git config --global alias.mrps 'push -o merge_request.create -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH -o merge_request.title="Update pod-info application version to ${APP_VERSION}" -o merge_request.remove_source_branch'
-    - git mrps https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
+    - git push -o merge_request.create -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH -o merge_request.title="Update pod-info application version to ${APP_VERSION}" -o merge_request.remove_source_branch https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
