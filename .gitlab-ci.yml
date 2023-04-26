@@ -45,6 +45,8 @@ create merge request:
   image: 
     name: alpine/git:2.36.3
     entrypoint: [""]
+  variables:
+    TARGET_REPO_DEFAULT_BRANCH: master
   script:
     # to be able to use the CI_JOB_TOKEN the pure-gitops project must add the pod-info-app project to its allowlist -
     # that is not needed for public or internal projects
@@ -59,4 +61,8 @@ create merge request:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
-    - git push https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
+    - git push https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION \
+        -o merge_request.create \
+        -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH \
+        -o merge_request.title="Update pod-info application version to ${APP_VERSION}" \
+        -o merge_request.remove_source_branch
