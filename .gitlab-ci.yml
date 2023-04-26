@@ -43,8 +43,7 @@ variables:
 create merge request:
   stage: deploy
   image: 
-    # name: alpine/git:2.36.3
-    name: bitnami/git:2.40.1
+    name: alpine/git:2.36.3
     entrypoint: [""]
   variables:
     TARGET_REPO_DEFAULT_BRANCH: master
@@ -62,4 +61,4 @@ create merge request:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
-    - git push -o merge_request.create -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH -o merge_request.title="Update pod-info application version to ${APP_VERSION}" -o merge_request.remove_source_branch https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
+    - git push -o merge_request.create -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH -o merge_request.title="Update application version to ${APP_VERSION}" -o merge_request.remove_source_branch https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
