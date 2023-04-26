@@ -60,4 +60,5 @@ create merge request:
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
     - git push https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
+    - glab mr create -t "Update application image version to ${APP_VERSION}"
 
