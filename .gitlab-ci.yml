@@ -43,7 +43,8 @@ variables:
 create merge request:
   stage: deploy
   image: 
-    name: alpine/git:2.36.3
+    # name: alpine/git:2.36.3
+    name: bitnami/git:2.40.1
     entrypoint: [""]
   variables:
     TARGET_REPO_DEFAULT_BRANCH: master
