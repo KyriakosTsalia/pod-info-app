@@ -45,8 +45,8 @@ create merge request:
   image: 
     name: alpine/git:2.36.3
     entrypoint: [""]
-  variables:
-    TARGET_REPO_DEFAULT_BRANCH: master
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
   script:
     # to be able to use the CI_JOB_TOKEN the TARGET_REPO_PROJECT must add the pod-info-app project to its allowlist -
     # that is not needed for public or internal projects
@@ -55,10 +55,10 @@ create merge request:
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/${TARGET_REPO_NAMESPACE}/${TARGET_REPO_PROJECT}
     - cd ${TARGET_REPO_PROJECT}
     - git checkout -b feature/app-version_$APP_VERSION
-    - sed -i "s#registry.gitlab.com.*#$CI_REGISTRY_IMAGE:${APP_VERSION}#g" manifests/deployment.yaml
+    - sed -i "s#$CI_REGISTRY_IMAGE.*#$CI_REGISTRY_IMAGE:${APP_VERSION}#g" manifests/deployment.yaml
     - grep image manifests/deployment.yaml
     - git add .
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email $GITLAB_USER_EMAIL
     - git commit -m "updated image version to ${APP_VERSION}"
-    - git push -o merge_request.create -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH -o merge_request.title="Update application version to ${APP_VERSION}" -o merge_request.remove_source_branch https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/kyriakos_tsalia/pure-gitops feature/app-version_$APP_VERSION
+    - git push -o merge_request.create -o merge_request.target=$TARGET_REPO_DEFAULT_BRANCH -o merge_request.title="Update application version to ${APP_VERSION}" -o merge_request.remove_source_branch https://$GITLAB_USER_LOGIN:$PERSONAL_ACCESS_TOKEN@gitlab.com/${TARGET_REPO_NAMESPACE}/${TARGET_REPO_PROJECT} feature/app-version_$APP_VERSION
