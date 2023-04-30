@@ -25,7 +25,6 @@ docker build:
     - docker:23.0.4-dind
   image: docker:23.0.4
   script:
-    - apk add curl
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - docker build -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE:$APP_VERSION .
     - docker image ls
